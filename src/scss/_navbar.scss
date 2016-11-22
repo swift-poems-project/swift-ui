@@ -1,0 +1,95 @@
+#navbar-container {
+    background-image: linear-gradient(to bottom, #545454, #333333);
+    border: medium none;
+    border-radius: 0;
+    z-index: 1;
+}
+
+#navbar-container.affix {
+    width: 100%;
+    top: 0px;
+}
+
+#navbar-menu {
+    height: 64px;
+}
+
+#navbar-menu li {
+    padding: 2px;
+}
+
+#navbar-menu li a {
+    color: #ffffff;
+    font-size: x-large;
+    height: 64px;
+    text-align: center;
+}
+
+#menu-nav-reset {
+    padding-top: 8px;
+}
+
+#search-text {
+
+    vertical-align: top;
+}
+
+#search {
+    background-color: transparent;
+    border-width: 0;
+}
+
+#search span {
+    color: #cccccc;
+    display: block;
+}
+
+.navbar-header {
+    float:inherit;
+}
+
+.navbar-brand {
+    height: 64px;
+    padding: 8px;
+    padding-top: inherit;
+}
+
+.navbar-brand img {
+    height: 48px;
+}
+
+#navbar .menu.nav {
+    padding-top: 12px;
+}
+
+#navbar .menu.nav#navbar-search {
+    padding-top: 16px;
+}
+
+#navbar-menu.menu.nav {
+    padding-top: 0;
+}
+
+#autosuggest-poems input {
+	width: 100%;
+	font-size: x-large;
+}
+#autosuggest-poems ul {
+	list-style: none;
+	padding-left: 3px;
+	border: 1px solid;
+}
+#autosuggest-poems ul a {
+	color: #545454;
+	font-size: x-large;
+	width: 100%;
+	display: inline-block;
+}
+#autosuggest-poems ul a:hover, a:focus, a:active {
+	background-color: #545454;
+	color: #ffffff;
+}
+
+.suggestionFocused {
+	background: blue;
+}
