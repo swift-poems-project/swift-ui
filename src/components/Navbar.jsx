@@ -3,34 +3,30 @@ import { Link, browserHistory } from 'react-router'
 import withRouter from 'react-router/lib/withRouter'
 import assign from 'object-assign'
 import Autosuggest from 'react-autosuggest'
-import theme from '../../build/style.css'
 
 const T = React.PropTypes
 
 let languages = []
 
 const asyncRequest = new Promise(function(resolve, reject) {
-	// Standard XHR to load an image
+
 	var request = new XMLHttpRequest();
-	request.open('GET', "/api/suggest/poems");
-	//request.responseType = 'blob';
-	// When the request loads, check whether it was successful
+
+	request.open('GET', `${process.env.API_BASE_URL}/suggest/poems`);
+
 	request.onload = function() {
 		if (request.status === 200) {
-		// If successful, resolve the promise by passing back the request response
-			resolve(request.response);
+			resolve(request.response)
 		} else {
-		// If it fails, reject the promise with a error message
-			reject(Error('Image didn\'t load successfully; error code:' + request.statusText));
+			reject(Error(request.statusText))
 		}
 	};
+
 	request.onerror = function() {
-	// Also deal with the case when the entire request fails to begin with
-	// This is probably a network error, so reject the promise with an appropriate message
-			reject(Error('There was a network error.'));
+		reject(Error('There was a network error.'))
 	};
-	// Send the request
-	request.send();
+
+	request.send()
 });
 
 asyncRequest.then(function(response) {
@@ -47,10 +43,15 @@ const Navbar = React.createClass({
     	suggestions: []
 		};
  	},
-	onChange: function (event, { newValue }) {
+	onChange: function (event, { newValue, method }) {
     this.setState({
       value: newValue
     })
+	},
+	onBlur: function (event, { focusedSuggestion }) {
+		if (focusedSuggestion != null && typeof(focusedSuggestion) != 'undefined') {
+			browserHistory.push(`/poems/${focusedSuggestion}`)
+		}
 	},
 	onSuggestionsFetchRequested: function ({ value }) {
     this.setState({
@@ -63,7 +64,6 @@ const Navbar = React.createClass({
     });
   },
 	getSuggestions: function (value) {
-		//this.props.fetchSuggestedPoems(value)
 	  const inputValue = value.trim().toLowerCase();
 	  const inputLength = inputValue.length;
 
@@ -71,15 +71,28 @@ const Navbar = React.createClass({
 	    poem.toLowerCase().slice(0, inputLength) === inputValue
 	  );
 	},
+
+	onSuggestionSelected: function (event, { suggestion, suggestionValue, sectionIndex, method }) {
+		switch (method) {
+			case 'click':
+			case 'enter':
+				//browserHistory.push(`/poems/${suggestionValue}`)
+				window.location.assign(`/poems/${suggestionValue}`)
+		}
+	},
+
 	getSuggestionValue: suggestion => suggestion,
+
 	renderSuggestion: suggestion => (
 	  <a href={`/poems/${suggestion}`}>{suggestion}</a>
 	),/*<Link to={`/poems/${suggestion}`}>{suggestion}</Link>*/
+
 	render: function () {
 			const { value, suggestions } = this.state;
 			const inputProps = {
 				value: value,
 				onChange: this.onChange,
+				onBlur: this.onBlur,
 				type: 'search',
 				placeholder: 'Browse by Poem ID',
 			};
@@ -90,10 +103,10 @@ const Navbar = React.createClass({
 								suggestions={suggestions}
 								onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 								onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+								onSuggestionSelected={this.onSuggestionSelected}
 								getSuggestionValue={this.getSuggestionValue}
 								renderSuggestion={this.renderSuggestion}
 								inputProps={inputProps}
-								theme={theme}
 								/>
 				</div>
 			)}
