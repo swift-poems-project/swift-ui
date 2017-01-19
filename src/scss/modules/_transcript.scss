@@ -1,0 +1,41 @@
+/**
+ * Styling for the transcripts
+ *
+ */
+@font-face {
+    font-family: "Portcullion";
+    src: url("/static/fonts/portcullion.ttf");
+}
+
+#transcript-sidebar {
+    bottom: 4%;
+    right: 0;
+    width: 12%;
+}
+
+#transcript-sidebar li {
+    background-color: #a53a23;
+    border-radius: 4px;
+}
+
+.tei-document {
+    color: #333333;
+    /*font-family: 'Italianno', cursive;*/
+}
+
+.tei-black-letter {
+    font-family: 'Portcullion';
+    font-size: larger;
+}
+
+.tei-body {
+    text-align: left;
+}
+
+.tei-footnote {
+    text-align: left;
+}
+
+.tei-display-initial {
+    font-size: xx-large;
+}

@@ -5,7 +5,7 @@ import {
     POEM_NOT_FOUND_ERROR,
 } from '../constants'
 
-import { getPoem, suggestPoems, collate } from '../../lib/api'
+import { getPoem, suggestPoems } from '../../lib/api'
 
 export const fetchPoem = id => (dispatch) => {
     dispatch({
@@ -71,36 +71,3 @@ export const fetchSuggestedPoems = query => (dispatch) => {
 				})
 	    }
 	)}
-
-	export const fetchCollation = params => (dispatch) => {
-	    dispatch({
-				type: FETCHING_POEM,
-				params
-	    })
-
-	    return collate(params)
-			.then(
-		    data => {
-					dispatch({
-			    	type: RECEIVE_POEM,
-			    	data,
-					})
-		    },
-		    error => {
-					if (error.status === 404) {
-			    	dispatch({
-							type: POEM_NOT_FOUND_ERROR,
-							error,
-							params,
-			    	})
-
-			    	return
-					}
-
-		    	dispatch({
-			    	type: FETCHING_POEM_ERROR,
-			    	error,
-			    	params,
-					})
-		    }
-		)}

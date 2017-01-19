@@ -14,7 +14,6 @@ import App from './App.jsx'
 import Home from './pages/Home.jsx'
 import Transcript from './pages/Transcript.jsx'
 import Poem from './pages/Poem.jsx'
-import Collation from './pages/Collation.jsx'
 
 const Swift = (
 	<Provider store={store}>
@@ -23,7 +22,6 @@ const Swift = (
 	       <IndexRoute component={Home} />
 	       <Route path="transcripts/:id" component={Transcript} />
 	       <Route path="poems/:id" component={Poem} />
-				 <Route path="collate" component={Collation} />
 	    </Route>
 	  </Router>
 	</Provider>

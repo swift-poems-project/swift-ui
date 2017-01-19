@@ -1,0 +1,135 @@
+.poem {
+	.form {
+		.table {
+			td {
+				text-align: left;
+
+				a {
+					color: #a53a23;
+				}
+			}
+		}
+	}
+}
+
+#collate-form .container-fluid {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+/**
+ * Poem interface
+ *
+ */
+#collate-form .mode-control {
+    width: inherit;
+    height: inherit;
+}
+
+/**
+ * Collation interface
+ *
+ */
+/*
+.table-striped > tbody > tr:nth-child(2n) td {
+    color: #d68378;
+}
+*/
+
+/*
+.table-striped > tbody > tr:nth-child(2n+1) {
+    color: #ffffff;
+    background-color: #d68378;
+}
+*/
+/*
+.table-striped > tbody > tr:nth-child(2n+1) a {
+    text-decoration: underline;
+}
+*/
+
+.table-striped > tbody > tr a {
+    color: #a53a23;
+    text-decoration: underline;
+}
+
+#mode .container-fluid {
+    display: inline-block;
+}
+
+#collation {
+    padding-bottom: 3.3333%;
+}
+#content {
+    padding-bottom: 3.3333%;
+}
+
+#collate {
+    background-image: linear-gradient(to bottom, #545454, #333333);
+    border-color: #333333;
+}
+.btn-primary:active, .btn-primary.active {
+    background-color: #333333;
+    border-color: #333333;
+}
+.btn-primary:hover, .btn-primary:focus {
+			background-color: #333333;
+			background-position: 0 -15px;
+		    }
+
+.page-header {
+    color: #ffffff;
+}
+
+.display-initial {
+
+    font-variant: small-caps;
+}
+
+.DISPLAY-INITIAL {
+
+    font-variant: small-caps;
+}
+
+/* Refactor using LESS */
+.gradient-severe {
+
+    background-color: #f27474;
+}
+
+.gradient-hot {
+
+    background-color: #f2a5a5;
+}
+
+.gradient-warm {
+
+    background-color: #f2b3b3;
+}
+
+.gradient-moderate {
+
+    background-color: #f2c2c2;
+}
+
+.gradient-mild {
+
+    background-color: #F2DEDE;
+}
+
+.gradient-none {
+
+        /*
+      background-color: #F2DEDE;
+       */
+}
+
+#collation-container .table {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#collation-container .table a {
+    color: #a53a23;
+    text-decoration: underline;
+}

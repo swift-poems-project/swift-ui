@@ -1,0 +1,25 @@
+.table-tokens-container {
+	overflow: scroll;
+}
+
+/*
+ * Styling for the collation table
+ *
+ */
+td.base {
+    width: 4%;
+}
+
+td.token {
+    width: 8%;
+}
+
+.line-row-number {
+
+    width: 14%;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+
+    border-top: inherit;
+}
