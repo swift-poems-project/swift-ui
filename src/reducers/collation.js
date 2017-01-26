@@ -33,9 +33,7 @@ function receiveCollation (state, action) {
   return {
 		data: action.data,
 		fetchedAt: Date.now(),
-		isFetching: false,
-		isSaving: false,
-		updates: {},
+		isFetching: false
   }
 }
 
