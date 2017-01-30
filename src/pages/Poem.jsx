@@ -28,11 +28,17 @@ const Poem = React.createClass({
 			this.props.fetchPoem(id)
     },
 
+		handleReset: function () {
+			this.props.resetCollation()
+		},
+
 		renderPoem: function (transcripts) {
 			return (
 				<CollationForm
 					poemId={this.props.params.id}
 					transcripts={transcripts}
+					handleReset={this.handleReset}
+					fetchCollation={this.props.fetchCollation}
 				/>
 			)
 		},

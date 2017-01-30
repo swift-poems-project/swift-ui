@@ -1,7 +1,8 @@
 import {
     FETCHING_COLLATION,
     RECEIVE_COLLATION,
-		FETCHING_COLLATION_ERROR
+		FETCHING_COLLATION_ERROR,
+		RESET_COLLATION
 } from '../constants'
 
 export default function collationReducer (state, action) {
@@ -18,12 +19,21 @@ export default function collationReducer (state, action) {
 			case FETCHING_COLLATION_ERROR:
 				return fetchingCollationError(state, action)
 
+			case RESET_COLLATION:
+				return resetCollation(state, action)
+
     	default:
 				return state
     }
 }
 
-function fetchingCollation (/* state, action */) {
+function resetCollation () {
+	return {
+		isFetching: false
+	}
+}
+
+function fetchingCollation () {
 	return {
 		isFetching: true,
   }

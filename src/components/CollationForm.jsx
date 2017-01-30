@@ -10,7 +10,8 @@ const CollationForm = React.createClass({
 
 	propTypes: {
 		poemId: T.string.isRequired,
-		transcripts: T.array.isRequired
+		transcripts: T.array.isRequired,
+		handleReset: T.func.isRequired
 	},
 
 	getInitialState: function () {
@@ -20,18 +21,33 @@ const CollationForm = React.createClass({
 			baseText = transcript['id'] ? transcript.id : null
 		}
 
+		const texts = this.props.transcripts.map(transcript => transcript.id)
+
 		return {
 			baseText: baseText,
-			variantTexts: this.props.transcripts.map(transcript => transcript.id),
-			transcripts: this.props.transcripts
+			texts: texts,
+			variantTexts: texts
 		}
 	},
 
-	handleDragAndDrop: function (dragIndex, hoverIndex) {
-		const reorderedTranscripts = this.state.transcripts.slice()
-		const dragText = transcripts[dragIndex]
+	handleDragAndDrop: function (dragTextId, hoverTextId) {
 
-		this.setState({transcripts: reorderedTranscripts})
+		// Update the Texts
+		const reorderedTranscripts = this.state.texts.slice()
+		let dragTextIndex = reorderedTranscripts.indexOf(dragTextId)
+		let hoverTextIndex = reorderedTranscripts.indexOf(hoverTextId)
+		reorderedTranscripts[hoverTextIndex] = dragTextId
+		reorderedTranscripts[dragTextIndex] = hoverTextId
+
+		// Rather than iterate and search for ordering changes in componentWillReceiveProps(), just reorder here
+		// Refactor
+		const reorderedVariants = this.state.variantTexts.slice()
+		dragTextIndex = reorderedVariants.indexOf(dragTextId)
+		hoverTextIndex = reorderedVariants.indexOf(hoverTextId)
+		reorderedVariants[hoverTextIndex] = dragTextId
+		reorderedVariants[dragTextIndex] = hoverTextId
+
+		this.setState({texts: reorderedTranscripts, variantTexts: reorderedVariants})
 	},
 
 	/**
@@ -44,11 +60,11 @@ const CollationForm = React.createClass({
 		this.props.fetchCollation({
 			poemId: this.props.poemId,
 			baseText: this.state.baseText,
-			variantTexts: this.state.variantTexts
+			variantTexts: this.state.variantTexts.filter(e => e != this.state.baseText)
 		})
 	},
 
-	clearTexts: function() {
+	clearSelection: function() {
 		this.setState({variantTexts: [], baseText: null})
 	},
 
@@ -84,7 +100,6 @@ const CollationForm = React.createClass({
 	handleVariantTextsChange: function (event) {
 		let variantText = event.target.value
 		this.addOrRemoveVariantText(event.target.value)
-
 	},
 
 	render: function () {
@@ -101,21 +116,21 @@ const CollationForm = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						{ this.state.transcripts.map( transcript => <CollationFormRow
-																													key={transcript.id}
-																													id={transcript.id}
-																													handleVariantTextsChange={form.handleVariantTextsChange}
-																													handleBaseTextChange={form.handleBaseTextChange}
-																													handleDragAndDrop={form.handleDragAndDrop}
-																													variantTexts={form.state.variantTexts}
-																													baseText={form.state.baseText}
-
+						{ this.state.texts.map( text => <CollationFormRow
+																														key={text}
+																														id={text}
+																														handleVariantTextsChange={form.handleVariantTextsChange}
+																														handleBaseTextChange={form.handleBaseTextChange}
+																														handleDragAndDrop={form.handleDragAndDrop}
+																														variantTexts={form.state.variantTexts}
+																														baseText={form.state.baseText}
 																												/>) }
 
 					</tbody>
 				</table>
-				<input type="button" id="clear-texts" onClick={this.clearTexts} className="btn btn-warning" value="Clear Selection" />
 				<input className="btn btn-primary" type="submit" value="Collate" />
+				<input type="button" id="clear-selection" onClick={this.clearSelection} className="btn btn-warning" value="Clear Selection" />
+				<input type="button" id="reset" onClick={this.props.handleReset} className="btn btn-danger" value="Reset" />
 			</form>
 		)
 	},
