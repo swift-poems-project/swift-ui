@@ -71,10 +71,18 @@ const CollationForm = React.createClass({
 	addOrRemoveVariantText: function (variantText) {
 		let updatedVariantTexts = this.state.variantTexts.slice()
 
+		// Add a variant text if this has not been added
 		if (this.state.variantTexts.indexOf(variantText) == -1) {
 			updatedVariantTexts.push(variantText)
 		} else {
 			updatedVariantTexts = updatedVariantTexts.filter(e => e != variantText)
+		}
+
+		let updatedBaseText = this.state.baseText
+
+		// Set the base text to null if this was not a base text
+		if (this.state.variantTexts.indexOf(this.state.baseText == -1)) {
+			updatedBaseText = null;
 		}
 
 		// Refactor
@@ -82,18 +90,25 @@ const CollationForm = React.createClass({
 			this.setState({ variantTexts: updatedVariantTexts, baseText: null })
 		} else if (updatedVariantTexts.length == 1) {
 			this.setState({ variantTexts: updatedVariantTexts, baseText: variantText })
+		} else if (this.state.baseText == null && updatedVariantTexts.indexOf(variantText) > -1 ) {
+			this.setState({ variantTexts: updatedVariantTexts, baseText: variantText })
 		} else {
-			this.setState({ variantTexts: updatedVariantTexts })
+			this.setState({ variantTexts: updatedVariantTexts, baseText: updatedBaseText })
 		}
 	},
 
 	handleBaseTextChange: function (event) {
 		const currentBaseText = this.state.baseText
-		this.setState({ baseText: event.target.value })
-		if (event.target.value == "copy-text") {
+
+		// Add the base text to the list of selected texts
+		if (this.state.variantTexts.indexOf(this.state.baseText) == -1) {
 			this.addOrRemoveVariantText(currentBaseText)
+		}
+
+		if (event.target.value == "copy-text") {
+			this.setState({ baseText: null })
 		} else {
-			this.addOrRemoveVariantText(event.target.value)
+			this.setState({ baseText: event.target.value })
 		}
 	},
 
