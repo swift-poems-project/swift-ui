@@ -81,7 +81,7 @@ const CollationForm = React.createClass({
 		let updatedBaseText = this.state.baseText
 
 		// Set the base text to null if this was not a base text
-		if (this.state.variantTexts.indexOf(this.state.baseText == -1)) {
+		if (!updatedBaseText && this.state.variantTexts.indexOf(this.state.baseText == -1)) {
 			updatedBaseText = null;
 		}
 
@@ -101,11 +101,11 @@ const CollationForm = React.createClass({
 		const currentBaseText = this.state.baseText
 
 		// Add the base text to the list of selected texts
-		if (this.state.variantTexts.indexOf(this.state.baseText) == -1) {
+		if (currentBaseText && this.state.variantTexts.indexOf(currentBaseText) == -1) {
 			this.addOrRemoveVariantText(currentBaseText)
 		}
 
-		if (event.target.value == "copy-text") {
+		if (!currentBaseText && event.target.value == "copy-text") {
 			this.setState({ baseText: null })
 		} else {
 			this.setState({ baseText: event.target.value })
