@@ -17,6 +17,14 @@ export const connectSocket = (url) => (dispatch) => {
 
 	try {
 		const socket = new WebSocket(url)
+
+		// Pseudo-ping for handling timeouts
+		const timeout = (socket,timeout) => {
+			socket.send(0x9)
+			window.setTimeout(timeout, 1500, socket, timeout)
+		}
+		window.setTimeout(timeout, 1500, socket, timeout)
+
 		socket.addEventListener('message', (event) => {
 			dispatch({
 				type: ON_MESSAGE_SOCKET,
