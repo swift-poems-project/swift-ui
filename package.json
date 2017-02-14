@@ -10,7 +10,7 @@
     "storybook": "start-storybook -p 9001",
     "dev": "webpack-dev-server --config webpack.config.dev --content-base build/ --hot --inline --progress --colors --history-api-fallback",
     "build": "webpack --config webpack.config.prod",
-    "postbuild": "forever -c 'node_modules/babel-cli/bin/babel-node.js --presets es2015' server.js",
+    "postbuild": "forever -c 'node_modules/babel-cli/bin/babel-node.js --presets es2015' start server.js",
     "web": "npm run build && npm run postbuild",
     "lint": "eslint ."
   },
