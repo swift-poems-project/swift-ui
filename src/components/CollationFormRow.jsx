@@ -69,7 +69,7 @@ const CollationFormRow = React.createClass({
 
 		return connectDragSource(connectDropTarget(
 			<tr key={this.props.id} style={{ opacity: isDragging ? 0 : 1 }}>
-				<td>DRAG</td>
+				<td><span className="glyphicon glyphicon-option-horizontal collation-row-grab"></span></td>
 				<td scope="row">
 					<a href={`/transcripts/${this.props.id}`}>{ this.props.id }</a>
 				</td>

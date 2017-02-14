@@ -7,14 +7,14 @@ import {
 
 import { collate } from '../../lib/api'
 
-export const fetchCollation = params => (dispatch) => {
+export const fetchCollation = (socket, params) => (dispatch) => {
 
 	dispatch({
 		type: FETCHING_COLLATION,
 		params
 	})
 
-	return collate(params)
+	return collate(socket, params)
 		.then(
 			data => {
 				dispatch({
@@ -32,7 +32,6 @@ export const fetchCollation = params => (dispatch) => {
 )}
 
 export const resetCollation = () => (dispatch) => {
-
 	dispatch({
 		type: RESET_COLLATION
 	})
