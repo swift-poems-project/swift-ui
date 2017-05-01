@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import withRouter from 'react-router/lib/withRouter'
 import assign from 'object-assign'
+import CollationConsole from '../components/CollationConsole.jsx'
 import Collation from '../components/Collation.jsx'
 import CollationForm from '../components/CollationForm.jsx'
 import Websocket from 'react-websocket'
@@ -12,6 +13,9 @@ const Poem = React.createClass({
 			return {
 				id: this.props.params.id,
 				baseText: null,
+				collation: this.props.collation,
+				status: "Initializing the session...",
+				socketOpen: true
 			}
 		},
 
@@ -26,10 +30,32 @@ const Poem = React.createClass({
 			}
 
 			this.props.fetchPoem(id)
+			this.props.connectSocket(process.env.WEB_SOCKET_URL)
     },
 
+		componentWillReceiveProps: function (nextProps) {
+			if (nextProps.socket.message) {
+				const message = nextProps.socket.message
+				if (message.collation) {
+					const collation = JSON.parse(message.collation) // ?
+					this.setState({collation: collation, status: message.status})
+				} else {
+					this.setState({status: message.status})
+				}
+			}
+		},
+
 		handleReset: function () {
-			this.props.resetCollation()
+			this.setState({collation: {}, status: "Collation engine reset"})
+		},
+
+		fetchCollation: function (params) {
+			if (!this.props.socket.webSocket) {
+				this.props.connectSocket(process.env.WEB_SOCKET_URL)
+			} else {
+				const ws = this.props.socket.webSocket
+				ws.send( JSON.stringify(params) )
+			}
 		},
 
 		renderPoem: function (transcripts) {
@@ -38,13 +64,17 @@ const Poem = React.createClass({
 					poemId={this.props.params.id}
 					transcripts={transcripts}
 					handleReset={this.handleReset}
-					fetchCollation={this.props.fetchCollation}
+					fetchCollation={this.fetchCollation}
+					socket={this.props.socket}
 				/>
 			)
 		},
 
-		renderCollation: function (collation, error, isFetching) {
-			if (typeof collation === 'undefined')
+		renderCollation: function (collation) {
+			const error = null
+			const isFetching = false
+
+			if (typeof collation === 'undefined' || Object.keys(collation).length == 0)
 				if (error)
 					return (
 						<div>
@@ -78,7 +108,7 @@ const Poem = React.createClass({
     render: function () {
 			const id = this.props.params.id
 			const poem = this.props.poem
-			const collation = this.props.collation
+			const collation = this.state.collation
 
 			if(typeof poem.data === 'undefined' || poem.isFetching) {
 				return <div id="poem"><h1>Loading...</h1></div>
@@ -92,11 +122,11 @@ const Poem = React.createClass({
 					</section>
 					<section className="collection-status">
 						<div>
-
+							<CollationConsole webSocket={this.props.socket} status={this.state.status} />
 						</div>
 					</section>
 					<section className="collation-output">
-						{ this.renderCollation(collation.data, collation.error, collation.isFetching) }
+						{ this.renderCollation(this.state.collation) }
 					</section>
 				</div>
 			)}

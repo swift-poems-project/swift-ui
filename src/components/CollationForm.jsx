@@ -11,12 +11,13 @@ const CollationForm = React.createClass({
 	propTypes: {
 		poemId: T.string.isRequired,
 		transcripts: T.array.isRequired,
-		handleReset: T.func.isRequired
+		handleReset: T.func.isRequired,
+		fetchCollation: T.func.isRequired
 	},
 
 	getInitialState: function () {
 		let baseText = null
-		if ( this.props.transcripts ) {
+		if (this.props.transcripts) {
 			const transcript = this.props.transcripts[0]
 			baseText = transcript['id'] ? transcript.id : null
 		}
@@ -56,12 +57,21 @@ const CollationForm = React.createClass({
 	 */
 	handleSubmit: function (event) {
 		event.preventDefault()
+		/*
+		const ws = this.props.socket.webSocket
+		ws.send(JSON.stringify({
+				poemId: this.props.poemId,
+				baseText: this.state.baseText,
+				variantTexts: this.state.variantTexts.filter(e => e != this.state.baseText)
+		}))
+		*/
 
 		this.props.fetchCollation({
 			poemId: this.props.poemId,
 			baseText: this.state.baseText,
 			variantTexts: this.state.variantTexts.filter(e => e != this.state.baseText)
 		})
+
 	},
 
 	clearSelection: function() {
@@ -143,7 +153,7 @@ const CollationForm = React.createClass({
 
 					</tbody>
 				</table>
-				<input className="btn btn-primary" type="submit" value="Collate" />
+				<input className="btn btn-primary" type="submit" value={this.props.socket.webSocket ? "Collate" : "Connect"} />
 				<input type="button" id="clear-selection" onClick={this.clearSelection} className="btn btn-warning" value="Clear Selection" />
 				<input type="button" id="reset" onClick={this.props.handleReset} className="btn btn-danger" value="Reset" />
 			</form>

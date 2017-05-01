@@ -8,9 +8,10 @@ import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
 
 const initialState = {
+		socket: {},
 		transcript: {},
-    poem: {},
 		collation: {},
+		poem: {},
     routing: {}
 }
 

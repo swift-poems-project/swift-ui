@@ -7,10 +7,11 @@ import Main from './pages/Main.jsx'
 
 function mapStateToProps (state) {
 	return {
-		transcript: state.transcript,
+		notifications: state.notifications,
+		socket: state.socket,
 		poem: state.poem,
-		collation: state.collation,
-		notifications: state.notifications
+		transcript: state.transcript,
+		collation: state.collation
   }
 }
 
