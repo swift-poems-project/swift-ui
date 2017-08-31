@@ -1,7 +1,6 @@
-import express from 'express';
-import path from 'path';
-import open from 'open';
-import compression from 'compression';
+const express = require('express')
+const path = require('path')
+const compression = require('compression')
 
 /*eslint-disable no-console */
 
@@ -19,7 +18,5 @@ app.get('*', function(req, res) {
 app.listen(port, function(err) {
   if (err) {
     console.log(err);
-  } else {
-    open(`http://${host}:${port}`);
   }
 });
