@@ -1135,7 +1135,7 @@ tei-pb {
 }
 /*
 tei-pb:before {
-tei-	content: "[page:\a0" attr(n) "]";
+tei-  content: "[page:\a0" attr(n) "]";
 }
 tei-*/
 tei-pc {
