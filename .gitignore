@@ -3,3 +3,5 @@
 node_modules
 semantic*
 
+build/bundle.js*
+build/style.css*
