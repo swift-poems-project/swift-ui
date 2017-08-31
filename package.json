@@ -4,13 +4,8 @@
   "description": "React/Redux user interface for the Lafayette Digital Repository for the Digital Edition of the Swift Poems Project",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm run lint && npm run test:single",
-    "test:single": "karma start --no-auto-watch --single-run",
-    "test:watch": "karma start --auto-watch --no-single-run",
-    "storybook": "start-storybook -p 9001",
     "dev": "webpack-dev-server --config webpack.config.dev --content-base build/ --hot --inline --progress --colors --history-api-fallback",
-    "build": "webpack --config webpack.config.prod",
-    "postbuild": "forever -c 'node_modules/babel-cli/bin/babel-node.js --presets es2015' start server.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.prod",
     "web": "npm run build && npm run postbuild",
     "lint": "eslint ."
   },
@@ -25,6 +20,8 @@
     "babel-cli": "^6.23.0",
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-static-fs": "^1.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
@@ -63,7 +60,6 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.0.0",
-    "semantic-ui": "^2.2.7",
     "sprintf-js": "^1.0.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
@@ -71,28 +67,7 @@
     "xhr": "^2.2.1"
   },
   "devDependencies": {
-    "@kadira/storybook": "^1.41.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-static-fs": "^1.1.0",
-    "chai": "^3.5.0",
-    "enzyme": "^2.4.1",
     "eslint": "^3.2.2",
-    "eslint-plugin-react": "^6.0.0",
-    "fetch-mock": "^5.1.1",
-    "karma": "^1.2.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-coverage": "^1.1.1",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-mocha-reporter": "^2.1.0",
-    "karma-phantomjs-launcher": "^1.0.1",
-    "karma-safari-launcher": "^1.0.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.8.0",
-    "mocha": "^3.0.2",
-    "random-array-index": "^1.1.0",
-    "random-bool": "^1.0.2",
-    "raw-loader": "^0.5.1",
-    "react-addons-test-utils": "^15.3.1",
-    "redux-mock-store": "^1.2.0"
+    "eslint-plugin-react": "^6.0.0"
   }
 }
